@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:layout_marginTop="14dp"
+    android:layout_marginStart="22dp"
+    android:layout_marginEnd="22dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <LinearLayout
+        android:id="@+id/transaction_logo_box"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/background_transaction_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/transaction_logo"
+            android:layout_width="29dp"
+            android:layout_height="29dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/transaction_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDark"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/transaction_date"
+        app:layout_constraintEnd_toStartOf="@+id/currency_type"
+        app:layout_constraintStart_toEndOf="@+id/transaction_logo_box"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/transaction_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="11sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/currency_type"
+        app:layout_constraintStart_toEndOf="@+id/transaction_logo_box"
+        app:layout_constraintTop_toBottomOf="@+id/transaction_title" />
+
+    <TextView
+        android:id="@+id/currency_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDarkGray"
+        android:textStyle="bold"
+        android:textFontWeight="500"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/currency_base"
+        app:layout_constraintEnd_toStartOf="@+id/currency_select"
+        app:layout_constraintTop_toTopOf="@+id/currency_select" />
+
+    <TextView
+        android:id="@+id/currency_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDark"
+        android:textStyle="bold"
+        android:textFontWeight="500"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/currency_base"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:text="$ 15.50"
+        android:id="@+id/currency_base"
+        android:textSize="14sp"
+        android:textColor="@color/colorDarkGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/currency_select"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

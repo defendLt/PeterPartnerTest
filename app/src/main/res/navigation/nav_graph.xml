@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.platdmit.peterpartnertest.app.screens.main.MainFragment"
+        android:label="@string/main_fragment_title">
+        <action
+            android:id="@+id/action_mainFragment_to_cardsFragment"
+            app:destination="@id/cardsFragment"
+            app:enterAnim="@anim/fragment_open_enter" />
+    </fragment>
+    <fragment
+        android:id="@+id/cardsFragment"
+        android:name="com.platdmit.peterpartnertest.app.screens.cards.CardsFragment"
+        android:label="@string/cards_fragment_title">
+        <action
+            android:id="@+id/action_cardsFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_enter"
+            app:popUpTo="@id/cardsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

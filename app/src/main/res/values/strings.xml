@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PeterPartnerTest</string>
+    <string name="card_balance">Your balance</string>
+    <string name="card_valid">Valid thru</string>
+    <string name="main_fragment_title">Главная</string>
+    <string name="cards_fragment_title">Мои карты</string>
+    <string name="change_currency_title">Change currency</string>
+    <string name="transaction_title">History</string>
+    <string name="message_empty">Нет данных</string>
+    <string name="message_fall">Ошибка загрузки</string>
+    <string name="message_fall_connect">Ошибка соединения</string>
+    <string name="currency_rub_symbol">₽</string>
+    <string name="currency_eur_symbol">€</string>
+    <string name="currency_gbp_symbol">£</string>
+    <string name="currency_gbp">GBP</string>
+    <string name="currency_eur">EUR</string>
+    <string name="currency_rub">RUB</string>
+    <string name="currency_usd">$</string>
+</resources>
