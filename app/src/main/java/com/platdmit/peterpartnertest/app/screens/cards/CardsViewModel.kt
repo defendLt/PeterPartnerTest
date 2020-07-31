@@ -15,7 +15,7 @@ constructor(
     private val cardsUseCase: CardsUseCase,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-    val cardsLiveData: MutableLiveData<List<Card>> = savedStateHandle.getLiveData("cards")
+    val cardsLiveData: MutableLiveData<List<Card>> = MutableLiveData()
 
     init {
         savedStateHandle.get<String>(CardBundleType.ACTIVE_CARD.name)?.let { card_number ->
