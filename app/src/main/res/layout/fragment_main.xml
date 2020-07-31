@@ -292,6 +292,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="4dp"
                 android:scrollbars="vertical"
+                android:scrollbarThumbVertical="@drawable/transaction_scroll"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
