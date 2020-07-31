@@ -38,7 +38,11 @@ class MainInteractor(
     }
 
     override fun getCardByNumber(cardNumber: String): Single<Card> {
-        return cardRepo.getCard(cardNumber)
+        return currencyRepo.getCurrencies()
+            .flatMap { currency ->
+                val converter = getBaseCurrencyConverter(currency)
+                return@flatMap cardRepo.getCard(cardNumber).map {setCurrencyConverter(it, converter)}
+            }
     }
 
     override fun getCardForCurrency(card: Card, currencyType: CurrencyType): Single<Card> {
@@ -49,7 +53,7 @@ class MainInteractor(
             }
     }
 
-    override fun refreshCurrency(): Completable {
+    private fun refreshCurrency(): Completable {
         return currencyRepo.refreshCurrency()
     }
 
