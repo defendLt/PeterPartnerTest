@@ -32,7 +32,7 @@ private constructor(
     }
 
     private fun convertToRub(value: BigDecimal): BigDecimal{
-        return value*baseCurrency.getBigDecimalActualValue()
+        return value.multiply(baseCurrency.getBigDecimalActualValue())
     }
 
     companion object{
