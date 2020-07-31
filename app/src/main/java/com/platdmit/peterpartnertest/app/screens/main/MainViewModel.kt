@@ -27,7 +27,10 @@ constructor(
 
     private fun getStartCard(){
         compositeDisposable.add(
-            cardUseCase.getStartCard().subscribe({
+            cardUseCase.getStartCard().onErrorComplete{
+                messageLiveData.postValue(MessageType.FALL)
+                true
+            }.subscribe({
                 cardLiveData.postValue(it)
             }, {
                 messageLiveData.postValue(MessageType.FALL)
@@ -37,7 +40,11 @@ constructor(
 
     private fun getActiveCard(cardNumber : String) {
         compositeDisposable.add(
-            cardUseCase.getCardByNumber(cardNumber).subscribe({
+            cardUseCase.getCardByNumber(cardNumber)
+                .onErrorComplete{
+                    messageLiveData.postValue(MessageType.FALL)
+                    true
+                }.subscribe({
                 cardLiveData.postValue(it)
             }, {
                 messageLiveData.postValue(MessageType.FALL)
@@ -47,7 +54,11 @@ constructor(
 
     fun changeModCurrency(currencyType: CurrencyType){
         compositeDisposable.add(
-            cardUseCase.getCardForCurrency(cardLiveData.value!!, currencyType).subscribe({
+            cardUseCase.getCardForCurrency(cardLiveData.value!!, currencyType)
+                .onErrorComplete{
+                    messageLiveData.postValue(MessageType.FALL)
+                    true
+                }.subscribe({
                 cardLiveData.postValue(it)
             }, {
                 messageLiveData.postValue(MessageType.FALL)

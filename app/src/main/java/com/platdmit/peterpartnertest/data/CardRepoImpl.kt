@@ -68,6 +68,10 @@ class CardRepoImpl(
     override fun refreshCards(): Completable {
         return Completable.create{success ->
             apiCardRepo.getCards()
+                .onErrorComplete{
+                    success.onError(Throwable("Fall"))
+                    true
+                }
                 .subscribe { apiCards ->
                     cardDao.delCards()
                     apiCards.forEach {

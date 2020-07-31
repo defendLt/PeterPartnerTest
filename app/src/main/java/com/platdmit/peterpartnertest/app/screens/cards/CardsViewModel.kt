@@ -20,10 +20,13 @@ constructor(
     init {
         savedStateHandle.get<String>(CardBundleType.ACTIVE_CARD.name)?.let { card_number ->
             compositeDisposable.add(
-                cardsUseCase.getCards(card_number).subscribe(
+                cardsUseCase.getCards(card_number).onErrorComplete {
+                    messageLiveData.postValue(MessageType.FALL)
+                    true
+                }.subscribe(
                     {
                         cardsLiveData.postValue(it)
-                    },{
+                    }, {
                         messageLiveData.postValue(MessageType.FALL)
                     }
                 )
