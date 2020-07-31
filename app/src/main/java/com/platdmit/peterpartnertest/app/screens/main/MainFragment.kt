@@ -38,17 +38,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
 
         mainViewModel.messageLiveData.observe(viewLifecycleOwner, Observer { bindMessageData(it) })
 
-        initStartCurrencySelect()
         initClickListeners()
-    }
-
-    private fun getCardLogo(cardLogoType: CardLogoType) : Int{
-        return when(cardLogoType){
-            CardLogoType.MASTERCARD -> R.drawable.ic_mastercard
-            CardLogoType.VISA -> R.drawable.ic_visa
-            CardLogoType.UNIONPAY -> R.drawable.ic_union
-            CardLogoType.UNKNOWN -> R.drawable.background_box_w
-        }
     }
 
     private fun bindAdapterData(transactions : List<Transaction>, currencyRateConverter: CurrencyRateConverter){
@@ -66,6 +56,27 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
         }
     }
 
+    private fun bindCurrencyData(currencyType: CurrencyType){
+        resetCurrencySelect()
+        when(currencyType){
+            CurrencyType.GBP -> {
+                change_gbp.isSelected = true
+                change_gbp_code.isSelected = true
+                change_gbp_symbol.isSelected = true
+            }
+            CurrencyType.EUR -> {
+                change_eur.isSelected = true
+                change_eur_code.isSelected = true
+                change_eur_symbol.isSelected = true
+            }
+            else -> {
+                change_rub.isSelected = true
+                change_rub_code.isSelected = true
+                change_rub_symbol.isSelected = true
+            }
+        }
+    }
+
     private fun parsObservableData(card: Card){
         val valueFormat = DecimalFormat("#,###.##")
         card_number.text = card.number
@@ -78,6 +89,9 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
         card.transaction_history?.let {
             bindAdapterData(it, card.currencyMod!!)
         }
+
+        bindCurrencyData(card.currencyMod?.getConvertCurrencyType()?:CurrencyType.GBP)
+
         (activity as? ShowLoaderHandler)?.loaderVisible(false)
     }
 
@@ -90,34 +104,25 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
         }
 
         change_gbp.setOnClickListener {
-            resetCurrencySelect()
-            it.isSelected = true
-            change_gbp_code.isSelected = true
-            change_gbp_symbol.isSelected = true
             mainViewModel.changeModCurrency(CurrencyType.GBP)
         }
 
         change_eur.setOnClickListener {
-            resetCurrencySelect()
-            it.isSelected = true
-            change_eur_code.isSelected = true
-            change_eur_symbol.isSelected = true
             mainViewModel.changeModCurrency(CurrencyType.EUR)
         }
 
         change_rub.setOnClickListener {
-            resetCurrencySelect()
-            it.isSelected = true
-            change_rub_code.isSelected = true
-            change_rub_symbol.isSelected = true
             mainViewModel.changeModCurrency(CurrencyType.USD)
         }
     }
 
-    private fun initStartCurrencySelect() {
-        change_gbp.isSelected = true
-        change_gbp_code.isSelected = true
-        change_gbp_symbol.isSelected = true
+    private fun getCardLogo(cardLogoType: CardLogoType) : Int{
+        return when(cardLogoType){
+            CardLogoType.MASTERCARD -> R.drawable.ic_mastercard
+            CardLogoType.VISA -> R.drawable.ic_visa
+            CardLogoType.UNIONPAY -> R.drawable.ic_union
+            CardLogoType.UNKNOWN -> R.drawable.background_box_w
+        }
     }
 
     private fun resetCurrencySelect(){

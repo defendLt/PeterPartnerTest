@@ -5,7 +5,8 @@ import com.platdmit.peterpartnertest.domain.model.Currency
 import java.math.BigDecimal
 
 interface CurrencyRateConverter {
-    fun getCurrencySymbol() : String
-    fun getConvertValue(value: Double) : BigDecimal
+    fun getCurrencySymbol(): String
+    fun getConvertValue(value: Double): BigDecimal
+    fun getConvertCurrencyType(): CurrencyType
     fun setConvertCurrency(currency: Currency)
 }

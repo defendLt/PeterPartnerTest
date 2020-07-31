@@ -10,7 +10,7 @@ private constructor(
     private var convertCurrency: Currency
 ) : CurrencyRateConverter {
     override fun getCurrencySymbol(): String {
-        return when(convertCurrency.type){
+        return when (convertCurrency.type) {
             CurrencyType.USD -> "₽"
             CurrencyType.EUR -> "€"
             CurrencyType.GBP -> "£"
@@ -20,25 +20,30 @@ private constructor(
 
     override fun getConvertValue(value: Double): BigDecimal {
         val rubValue = convertToRub(value.toBigDecimal())
-        return if(convertCurrency.type == CurrencyType.USD){
+        return if (convertCurrency.type == CurrencyType.USD) {
             rubValue.setScale(SCALE, ROUND)
         } else {
             rubValue.divide(convertCurrency.getBigDecimalActualValue(), SCALE, ROUND)
         }
     }
 
+    override fun getConvertCurrencyType(): CurrencyType {
+        return convertCurrency.type
+    }
+
     override fun setConvertCurrency(currency: Currency) {
         convertCurrency = currency
     }
 
-    private fun convertToRub(value: BigDecimal): BigDecimal{
+    private fun convertToRub(value: BigDecimal): BigDecimal {
         return value.multiply(baseCurrency.getBigDecimalActualValue())
     }
 
-    companion object{
-        fun build(baseCurrency: Currency, convertCurrency: Currency) : CurrencyRateConverterImpl{
+    companion object {
+        fun build(baseCurrency: Currency, convertCurrency: Currency): CurrencyRateConverterImpl {
             return CurrencyRateConverterImpl(baseCurrency, convertCurrency)
         }
+
         const val SCALE = 2
         const val ROUND = BigDecimal.ROUND_HALF_UP
     }
