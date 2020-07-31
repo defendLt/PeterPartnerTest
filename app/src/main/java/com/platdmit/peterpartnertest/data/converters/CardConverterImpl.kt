@@ -20,13 +20,13 @@ constructor() : CardConverter<ApiCard, DbCard, Card> {
         )
     }
 
-    override fun fromDbToDomain(dbCard: DbCard): Card {
+    override fun fromDbToDomain(dbModel: DbCard): Card {
         return Card(
-            dbCard.cardNumber,
-            checkCardType(dbCard.type),
-            dbCard.cardholderName,
-            dbCard.valid,
-            dbCard.balance
+            dbModel.cardNumber,
+            checkCardType(dbModel.type),
+            dbModel.cardholderName,
+            dbModel.valid,
+            dbModel.balance
         )
     }
 
