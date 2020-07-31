@@ -21,9 +21,9 @@ private constructor(
     override fun getConvertValue(value: Double): BigDecimal {
         val rubValue = convertToRub(value.toBigDecimal())
         return if(convertCurrency.type == CurrencyType.USD){
-            rubValue.setScale(2, BigDecimal.ROUND_HALF_UP)
+            rubValue.setScale(SCALE, ROUND)
         } else {
-            rubValue.divide(convertCurrency.getBigDecimalActualValue(), 2, BigDecimal.ROUND_HALF_UP)
+            rubValue.divide(convertCurrency.getBigDecimalActualValue(), SCALE, ROUND)
         }
     }
 
@@ -39,5 +39,7 @@ private constructor(
         fun build(baseCurrency: Currency, convertCurrency: Currency) : CurrencyRateConverterImpl{
             return CurrencyRateConverterImpl(baseCurrency, convertCurrency)
         }
+        const val SCALE = 2
+        const val ROUND = BigDecimal.ROUND_HALF_UP
     }
 }
