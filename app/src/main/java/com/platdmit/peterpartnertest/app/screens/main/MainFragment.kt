@@ -125,10 +125,10 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
         change_gbp.isSelected = false
         change_eur.isSelected = false
         change_gbp_code.isSelected = false
-        change_gbp_symbol.isSelected = false
         change_eur_code.isSelected = false
-        change_eur_symbol.isSelected = false
         change_rub_code.isSelected = false
+        change_gbp_symbol.isSelected = false
+        change_eur_symbol.isSelected = false
         change_rub_symbol.isSelected = false
     }
 
