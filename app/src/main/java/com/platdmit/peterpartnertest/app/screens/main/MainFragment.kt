@@ -1,12 +1,8 @@
 package com.platdmit.peterpartnertest.app.screens.main
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
-import android.view.TextureView
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,15 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.platdmit.peterpartnertest.domain.model.Card
-import com.platdmit.peterpartnertest.domain.model.Transaction
 import com.platdmit.peterpartnertest.R
-import com.platdmit.peterpartnertest.app.utilities.enums.CardBundleType
 import com.platdmit.peterpartnertest.app.utilities.ShowLoaderHandler
 import com.platdmit.peterpartnertest.app.utilities.ShowMessageHandler
+import com.platdmit.peterpartnertest.app.utilities.enums.CardBundleType
 import com.platdmit.peterpartnertest.app.utilities.enums.MessageType
 import com.platdmit.peterpartnertest.domain.enums.CardLogoType
 import com.platdmit.peterpartnertest.domain.enums.CurrencyType
+import com.platdmit.peterpartnertest.domain.model.Card
+import com.platdmit.peterpartnertest.domain.model.Transaction
 import com.platdmit.peterpartnertest.domain.utilities.CurrencyRateConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -42,6 +38,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
 
         mainViewModel.messageLiveData.observe(viewLifecycleOwner, Observer { bindMessageData(it) })
 
+        initStartCurrencySelect()
         initClickListeners()
     }
 
@@ -93,48 +90,46 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
         }
 
         change_gbp.setOnClickListener {
-            resetCurrencySelect(it.context)
-            it.background = ContextCompat.getDrawable(it.context, R.drawable.background_box_b)
-            change_gbp_code.setTextColor(getSelectTextColor(it.context, true))
-            change_gbp_symbol.setTextColor(getSelectTextColor(it.context, true))
+            resetCurrencySelect()
+            it.isSelected = true
+            change_gbp_code.isSelected = true
+            change_gbp_symbol.isSelected = true
             mainViewModel.changeModCurrency(CurrencyType.GBP)
         }
 
         change_eur.setOnClickListener {
-            resetCurrencySelect(it.context)
-            it.background = ContextCompat.getDrawable(it.context, R.drawable.background_box_b)
-            change_eur_code.setTextColor(getSelectTextColor(it.context, true))
-            change_eur_symbol.setTextColor(getSelectTextColor(it.context, true))
+            resetCurrencySelect()
+            it.isSelected = true
+            change_eur_code.isSelected = true
+            change_eur_symbol.isSelected = true
             mainViewModel.changeModCurrency(CurrencyType.EUR)
         }
 
         change_rub.setOnClickListener {
-            resetCurrencySelect(it.context)
-            it.background = ContextCompat.getDrawable(it.context, R.drawable.background_box_b)
-            change_rub_code.setTextColor(getSelectTextColor(it.context, true))
-            change_rub_symbol.setTextColor(getSelectTextColor(it.context, true))
+            resetCurrencySelect()
+            it.isSelected = true
+            change_rub_code.isSelected = true
+            change_rub_symbol.isSelected = true
             mainViewModel.changeModCurrency(CurrencyType.USD)
         }
     }
 
-    private fun getSelectTextColor(context: Context, status: Boolean) : Int{
-        return if (status){
-            ContextCompat.getColor(context, R.color.colorWhite)
-        } else {
-            ContextCompat.getColor(context, R.color.colorDarkGray)
-        }
+    private fun initStartCurrencySelect() {
+        change_gbp.isSelected = true
+        change_gbp_code.isSelected = true
+        change_gbp_symbol.isSelected = true
     }
 
-    private fun resetCurrencySelect(context: Context){
-        change_rub.background = ContextCompat.getDrawable(context, R.drawable.background_box_w)
-        change_gbp.background = ContextCompat.getDrawable(context, R.drawable.background_box_w)
-        change_eur.background = ContextCompat.getDrawable(context, R.drawable.background_box_w)
-        change_gbp_code.setTextColor(getSelectTextColor(context, false))
-        change_gbp_symbol.setTextColor(getSelectTextColor(context, false))
-        change_eur_code.setTextColor(getSelectTextColor(context, false))
-        change_eur_symbol.setTextColor(getSelectTextColor(context, false))
-        change_rub_code.setTextColor(getSelectTextColor(context, false))
-        change_rub_symbol.setTextColor(getSelectTextColor(context, false))
+    private fun resetCurrencySelect(){
+        change_rub.isSelected = false
+        change_gbp.isSelected = false
+        change_eur.isSelected = false
+        change_gbp_code.isSelected = false
+        change_gbp_symbol.isSelected = false
+        change_eur_code.isSelected = false
+        change_eur_symbol.isSelected = false
+        change_rub_code.isSelected = false
+        change_rub_symbol.isSelected = false
     }
 
     override fun showMessage(message: String) {

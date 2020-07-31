@@ -1,7 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:drawable="@drawable/currency_checkbox"
-        android:state_checked="false"/>
-    <item android:drawable="@drawable/currency_checkbox_active"
-        android:state_checked="true"/>
-    <item android:drawable="@drawable/currency_checkbox"/>
+    <item android:drawable="@drawable/background_box_b"
+        android:state_selected="true"/>
+    <item android:drawable="@drawable/background_box_w"/>
 </selector>
