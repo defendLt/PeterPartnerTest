@@ -3,6 +3,7 @@ package com.platdmit.peterpartnertest.domain.usecase
 import com.platdmit.peterpartnertest.domain.enums.CurrencyType
 import com.platdmit.peterpartnertest.domain.model.Card
 import com.platdmit.peterpartnertest.domain.model.Currency
+import com.platdmit.peterpartnertest.domain.model.Transaction
 import com.platdmit.peterpartnertest.domain.repositories.CardRepo
 import com.platdmit.peterpartnertest.domain.repositories.CurrencyRepo
 import com.platdmit.peterpartnertest.domain.utilities.CurrencyRateConverter
@@ -21,7 +22,7 @@ class MainInteractor(
             .andThen(currencyRepo.getCurrencies())
             .flatMap {currency ->
                 val converter = getBaseCurrencyConverter(currency)
-                return@flatMap cardRepo.getCard().map {setCurrencyConverter(it, converter)}
+                return@flatMap cardRepo.getCard().map { convertBalances(it, converter) }
             }.subscribeOn(Schedulers.io())
     }
 
@@ -29,7 +30,7 @@ class MainInteractor(
         return currencyRepo.getCurrencies()
             .flatMap { currency ->
                 val converter = getBaseCurrencyConverter(currency)
-                return@flatMap cardRepo.getCard(cardNumber).map {setCurrencyConverter(it, converter)}
+                return@flatMap cardRepo.getCard(cardNumber).map { convertBalances(it, converter) }
             }
     }
 
@@ -55,8 +56,22 @@ class MainInteractor(
         return CurrencyRateConverterImpl.build(usdCurrency, gbpCurrency)
     }
 
-    private fun setCurrencyConverter(card: Card, converter: CurrencyRateConverter) : Card{
+    private fun convertBalances(card: Card, converter: CurrencyRateConverter) : Card{
+        convertBalanceCard(card, converter)
         card.currencyMod = converter
+        card.transaction_history?.let {
+            convertBalanceTransaction(it, converter)
+        }
         return card
+    }
+
+    private fun convertBalanceCard(card: Card, converter: CurrencyRateConverter){
+        card.modBalance = converter.getConvertValue(card.balance)
+    }
+
+    private fun convertBalanceTransaction(transactions: List<Transaction>, converter: CurrencyRateConverter){
+        transactions.map {
+            it.modAmount = converter.getConvertValue(it.amount)
+        }
     }
 }

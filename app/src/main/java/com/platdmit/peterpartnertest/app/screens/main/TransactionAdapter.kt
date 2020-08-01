@@ -40,6 +40,7 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionVi
         private val title = itemView.findViewById<TextView>(R.id.transaction_title)
         private val date = itemView.findViewById<TextView>(R.id.transaction_date)
         private val valueBase = itemView.findViewById<TextView>(R.id.currency_base)
+        private val modCurrency = itemView.findViewById<TextView>(R.id.currency_type)
         private val valueMod = itemView.findViewById<TextView>(R.id.currency_select)
 
         fun bindData(transaction: Transaction){
@@ -51,7 +52,8 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionVi
             title.text = transaction.name
             date.text = transaction.date
             valueBase.text = transaction.amount.toString().replace("-", "${itemView.context.getText(R.string.currency_usd)} ")
-            valueMod.text = "- ${currencyRateConverter.getCurrencySymbol()} ${currencyRateConverter.getConvertValue(transaction.amount).toString().replace("-", "")}"
+            modCurrency.text = "- ${currencyRateConverter.getCurrencySymbol()} "
+            valueMod.text = "${transaction.modAmount.toString().replace("-", "")}"
         }
     }
 }
