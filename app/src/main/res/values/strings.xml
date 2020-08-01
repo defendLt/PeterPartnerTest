@@ -8,7 +8,7 @@
     <string name="transaction_title">History</string>
     <string name="message_empty">Нет данных</string>
     <string name="message_fall">Ошибка загрузки</string>
-    <string name="message_fall_connect">Ошибка соединения</string>
+    <string name="message_fall_connect">Отсутствует интернет соединение</string>
     <string name="currency_rub_symbol">₽</string>
     <string name="currency_eur_symbol">€</string>
     <string name="currency_gbp_symbol">£</string>

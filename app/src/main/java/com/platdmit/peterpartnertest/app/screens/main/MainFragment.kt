@@ -83,7 +83,7 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
         card_name.text = card.cardholder_name
         card_logo.setImageResource(getCardLogo(card.type))
         card_valid.text = card.valid
-        card_balance_dop.text = "${card.getModCurrencySymbol()} ${valueFormat.format(card.modBalance)}"
+        card_balance_dop.text = "${card.getModCurrencySymbol()}${valueFormat.format(card.modBalance)}"
         card_balance_value.text =  "${context?.getText(R.string.currency_usd)}${valueFormat.format(card.balance)}"
 
         card.transaction_history?.let {

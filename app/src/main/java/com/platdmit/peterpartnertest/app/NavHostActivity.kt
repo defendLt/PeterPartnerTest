@@ -1,8 +1,11 @@
 package com.platdmit.peterpartnertest.app
 
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,9 +13,6 @@ import androidx.navigation.ui.NavigationUI
 import com.platdmit.peterpartnertest.R
 import com.platdmit.peterpartnertest.app.utilities.ShowLoaderHandler
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_nav_host.*
 
 @AndroidEntryPoint
@@ -27,6 +27,7 @@ class NavHostActivity : AppCompatActivity(), ShowLoaderHandler {
         actionBarInit()
         navigationInit()
         navigationHandlerInit()
+        checkConnectStatus()
     }
 
     private fun actionBarInit() {
@@ -55,6 +56,19 @@ class NavHostActivity : AppCompatActivity(), ShowLoaderHandler {
                 toolbar_back_button.visibility = View.GONE
             } else {
                 toolbar_back_button.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun checkConnectStatus(){
+        val cm : ConnectivityManager? = getSystemService()
+        cm?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val capabilities = it.getNetworkCapabilities(it.activeNetwork)
+                if (capabilities == null) loader_hover_desc.setText(R.string.message_fall_connect)
+            } else {
+                val activeNetwork = it.activeNetworkInfo
+                if (activeNetwork?.isConnectedOrConnecting == false) loader_hover_desc.setText(R.string.message_fall_connect)
             }
         }
     }
