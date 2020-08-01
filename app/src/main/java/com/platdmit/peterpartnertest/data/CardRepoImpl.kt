@@ -63,18 +63,15 @@ class CardRepoImpl(
     }
 
     override fun refreshCards(): Completable {
-        return Completable.create{success ->
-            apiCardRepo.getCards()
-                .onErrorComplete {
-                    success.onError(Throwable("Fall"))
-                    true
-                }
-                .subscribe { apiCards ->
-                    cardDao.delCards()
-                    saveApiModelToDb(apiCards)
-                    success.onComplete()
-                }
-        }.subscribeOn(Schedulers.io())
+        return apiCardRepo.getCards()
+            .flatMapCompletable { apiCards ->
+                cardDao.delCards()
+                saveApiModelToDb(apiCards)
+                Completable.complete()
+            }.doOnError {
+                Completable.error(Throwable("Fall"))
+            }
+            .subscribeOn(Schedulers.io())
     }
 
     private fun saveApiModelToDb(apiCards : List<ApiCard>){
