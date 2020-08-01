@@ -42,18 +42,15 @@ class CurrencyRepoImpl(
     }
 
     override fun refreshCurrency(): Completable {
-        return Completable.create{success ->
-            apiCurrencyRepo.getCurrency().onErrorComplete {
-                success.onError(Throwable("Fall"))
-                true
-            }.subscribe({ apiCurrency ->
+        return apiCurrencyRepo.getCurrency()
+            .flatMapCompletable { apiCurrency ->
                 dbCurrencyRepo.delCurrencies()
                 val dbCurrency = apiCurrency.map { currencyConverter.fromApiToDb(it) }
                 dbCurrencyRepo.insertList(dbCurrency)
-                success.onComplete()
-            }, {
-                success.onError(it)
-            })
-        }.subscribeOn(Schedulers.io())
+                Completable.complete()
+            }.doOnError {
+                Completable.error(Throwable("Fall"))
+            }
+            .subscribeOn(Schedulers.io())
     }
 }
