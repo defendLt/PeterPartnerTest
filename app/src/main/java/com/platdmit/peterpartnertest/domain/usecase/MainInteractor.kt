@@ -1,6 +1,5 @@
 package com.platdmit.peterpartnertest.domain.usecase
 
-import com.platdmit.peterpartnertest.data.retrofit.models.ApiCurrencies
 import com.platdmit.peterpartnertest.domain.enums.CurrencyType
 import com.platdmit.peterpartnertest.domain.model.Card
 import com.platdmit.peterpartnertest.domain.model.Currency
@@ -17,24 +16,13 @@ class MainInteractor(
     private val currencyRepo: CurrencyRepo
 ) : CardUseCase {
     override fun getStartCard(): Single<Card> {
-        return Single.create<Card> { emitter ->
-            refreshCards()
-                .andThen(refreshCurrency())
-                .doOnComplete {}
-                .subscribe({
-                    currencyRepo.getCurrencies()
-                        .flatMap { currency ->
-                            val converter = getBaseCurrencyConverter(currency)
-                            return@flatMap cardRepo.getCard().map {setCurrencyConverter(it, converter)}
-                        }.subscribe({
-                            emitter.onSuccess(it)
-                        }, {
-                            emitter.onError(it)
-                        })
-                }, {
-                    emitter.onError(it)
-                })
-        }.subscribeOn(Schedulers.io())
+        return refreshCards()
+            .andThen(refreshCurrency())
+            .andThen(currencyRepo.getCurrencies())
+            .flatMap {currency ->
+                val converter = getBaseCurrencyConverter(currency)
+                return@flatMap cardRepo.getCard().map {setCurrencyConverter(it, converter)}
+            }.subscribeOn(Schedulers.io())
     }
 
     override fun getCardByNumber(cardNumber: String): Single<Card> {
@@ -69,6 +57,6 @@ class MainInteractor(
 
     private fun setCurrencyConverter(card: Card, converter: CurrencyRateConverter) : Card{
         card.currencyMod = converter
-        return card;
+        return card
     }
 }
