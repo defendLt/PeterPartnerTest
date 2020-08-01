@@ -38,6 +38,7 @@ class MainInteractor(
         return currencyRepo.getCurrency(currencyType)
             .map {
                 card.currencyMod?.setConvertCurrency(it)
+                convertBalances(card, card.currencyMod!!)
                 return@map card
             }
     }
