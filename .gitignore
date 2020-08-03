@@ -29,3 +29,11 @@ out/
 /captures
 .externalNativeBuild
 .cxx
+/.idea/encodings.xml
+/.idea/gradle.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/.idea/rest-client/
+/.idea/codeStyles/
+/.idea/runConfigurations.xml
+/.idea/vcs.xml
