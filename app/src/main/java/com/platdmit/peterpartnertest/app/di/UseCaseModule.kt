@@ -25,6 +25,7 @@ object UseCaseModule {
         )
     }
 
+    @Singleton
     @Provides
     fun provideGetCardUseCase(
         cardRepo: CardRepo,

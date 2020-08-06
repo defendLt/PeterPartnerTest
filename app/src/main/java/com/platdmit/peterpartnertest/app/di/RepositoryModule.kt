@@ -10,10 +10,6 @@ import com.platdmit.peterpartnertest.data.retrofit.models.ApiCurrency
 import com.platdmit.peterpartnertest.data.room.dao.CardDao
 import com.platdmit.peterpartnertest.data.room.dao.CurrencyDao
 import com.platdmit.peterpartnertest.data.room.dao.TransactionDao
-import com.platdmit.peterpartnertest.data.room.entity.DbCard
-import com.platdmit.peterpartnertest.domain.converters.CardConverter
-import com.platdmit.peterpartnertest.domain.converters.TransactionConverter
-import com.platdmit.peterpartnertest.domain.model.Card
 import com.platdmit.peterpartnertest.domain.repositories.CardRepo
 import com.platdmit.peterpartnertest.domain.repositories.CurrencyRepo
 import com.platdmit.peterpartnertest.domain.repositories.api.ApiCardRepo

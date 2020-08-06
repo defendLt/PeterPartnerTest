@@ -95,7 +95,6 @@ class MainFragment : Fragment(R.layout.fragment_main), ShowMessageHandler {
         (activity as? ShowLoaderHandler)?.loaderVisible(false)
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun initClickListeners() {
         card_detail.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_cardsFragment, bundleOf(
